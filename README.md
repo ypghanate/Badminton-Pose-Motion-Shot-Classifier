@@ -50,8 +50,9 @@ The extracted spatial-temporal representations pass through a custom classificat
 Raw Video ──► YOLO-Pose 26 ──► Hip-Relative Normalization ──► Classification Head ──► Annotated Video
 
 
-* 🦴 **Hip-Centric Normalization:** Feature vectors calculate joint distances and displacement relative to the hip center root-joint, achieving full **translation invariance** regardless of court position.
-* 🎯 **Aesthetic Visualization:** Generates activation heatmaps to verify prediction confidence across subtle shot transitions.
+* 🦴 **Scale & Translation Invariant Normalization:** Computes keypoint displacements relative to the hip center root-joint (`kp - hip_center`) scaled by torso length (`/ torso`), neutralizing player distance and camera zoom variations.
+* 📍 **Global Court Positioning Context:** Concatenates normalized 2D hip coordinates (`hip_center / [w, h]`) into the feature vector, providing spatial court location context to distinguish shots like baseline smashes from net lifts.
+* 🎯 **Activation Heatmap Analysis:** Generates spatial confidence heatmaps to verify feature activation during subtle shot execution phases.
 * 🎥 **Annotated Video Export:** Processes video frame sequences and renders real-time stroke labels overlaid onto output MP4 clips.
 * 📈 **Fine-Grained Classification:** Achieved **76% Accuracy** and an **80% F1-Score** across close shot classes (smash, drop, clear, drive, lift).
 
@@ -65,3 +66,5 @@ Raw Video ──► YOLO-Pose 26 ──► Hip-Relative Normalization ──► 
 | **F1-Score** | `80.0%` |
 | **Backbone** | `YOLO-Pose 26` |
 | **Input Format** | `Broadcast Video (MP4/AVI)` |
+
+---
